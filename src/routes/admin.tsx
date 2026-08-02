@@ -18,7 +18,17 @@ import { HALAL_ITEMS } from "@/lib/halal-data";
 import { NASHEEDS } from "@/lib/nasheed-data";
 import { PROPHETS } from "@/lib/extra-data";
 import { useSettings } from "@/lib/settings";
-import { CALCULATION_METHODS } from "@/lib/islamic-data";
+
+const CALCULATION_METHODS = [
+  { id: 1, name: "University of Islamic Sciences, Karachi" },
+  { id: 2, name: "Islamic Society of North America" },
+  { id: 3, name: "Muslim World League" },
+  { id: 4, name: "Umm Al-Qura, Makkah" },
+  { id: 5, name: "Egyptian General Authority" },
+  { id: 8, name: "Gulf Region" },
+  { id: 12, name: "Union des Organisations Islamiques de France" },
+  { id: 15, name: "Moonsighting Committee" },
+];
 
 export const Route = createFileRoute("/admin")({
   head: () => ({

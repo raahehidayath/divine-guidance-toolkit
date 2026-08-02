@@ -93,7 +93,7 @@ export const NASHEEDS: Nasheed[] = [
   { id: "n69", title: "Ya Rabb", artist: "Muhammad al-Muqit", language: "Arabic", theme: "Praise of Allah", about: "Purely vocal, multi-layered a cappella." },
   { id: "n70", title: "Kun Anta (a cappella)", artist: "Humood AlKhudher", language: "Arabic", theme: "Iman & patience", about: "Be yourself — be content with who Allah made you." },
   { id: "n71", title: "Aseer Ahsan", artist: "Humood AlKhudher", language: "Arabic", theme: "Iman & patience", about: "Becoming better every day." },
-  { id: "n72", title: "Lparams", artist: "Humood AlKhudher", language: "Arabic", theme: "Children", about: "Light-hearted nasheed for families." },
+  { id: "n72", title: "Ya Bunayya", artist: "Humood AlKhudher", language: "Arabic", theme: "Children", about: "Light-hearted nasheed for families." },
   { id: "n73", title: "Ya Rasul Allah (Vocals)", artist: "Muhammad al-Muqit", language: "Arabic", theme: "Salawat", about: "Rich harmonies with no instruments at all." },
   { id: "n74", title: "Ummati", artist: "Muhammad al-Muqit", language: "Arabic", theme: "Ummah", about: "A call to the ummah to rise." },
   { id: "n75", title: "Rahman Ya Rahman", artist: "Muhammad al-Muqit", language: "Arabic", theme: "Praise of Allah", about: "Repentance and mercy." },
