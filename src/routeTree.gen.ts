@@ -10,33 +10,297 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AiRouteImport } from './routes/ai'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as DuasRouteImport } from './routes/duas'
+import { Route as IbadaatRouteImport } from './routes/ibadaat'
+import { Route as MoreRouteImport } from './routes/more'
+import { Route as NamesRouteImport } from './routes/names'
+import { Route as QaidaRouteImport } from './routes/qaida'
+import { Route as QiblaRouteImport } from './routes/qibla'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SeerahRouteImport } from './routes/seerah'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TasbeehRouteImport } from './routes/tasbeeh'
+import { Route as TrackerRouteImport } from './routes/tracker'
+import { Route as ApiAiRouteImport } from './routes/api/ai'
+import { Route as HadithIndexRouteImport } from './routes/hadith/index'
+import { Route as HadithBookIdRouteImport } from './routes/hadith/$bookId'
+import { Route as MushafLinesRouteImport } from './routes/mushaf/$lines'
+import { Route as QuranIndexRouteImport } from './routes/quran/index'
+import { Route as QuranSurahIdRouteImport } from './routes/quran/$surahId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiRoute = AiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DuasRoute = DuasRouteImport.update({
+  id: '/duas',
+  path: '/duas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IbadaatRoute = IbadaatRouteImport.update({
+  id: '/ibadaat',
+  path: '/ibadaat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoreRoute = MoreRouteImport.update({
+  id: '/more',
+  path: '/more',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NamesRoute = NamesRouteImport.update({
+  id: '/names',
+  path: '/names',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QaidaRoute = QaidaRouteImport.update({
+  id: '/qaida',
+  path: '/qaida',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QiblaRoute = QiblaRouteImport.update({
+  id: '/qibla',
+  path: '/qibla',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SeerahRoute = SeerahRouteImport.update({
+  id: '/seerah',
+  path: '/seerah',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasbeehRoute = TasbeehRouteImport.update({
+  id: '/tasbeeh',
+  path: '/tasbeeh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackerRoute = TrackerRouteImport.update({
+  id: '/tracker',
+  path: '/tracker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAiRoute = ApiAiRouteImport.update({
+  id: '/api/ai',
+  path: '/api/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HadithIndexRoute = HadithIndexRouteImport.update({
+  id: '/hadith/',
+  path: '/hadith/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HadithBookIdRoute = HadithBookIdRouteImport.update({
+  id: '/hadith/$bookId',
+  path: '/hadith/$bookId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MushafLinesRoute = MushafLinesRouteImport.update({
+  id: '/mushaf/$lines',
+  path: '/mushaf/$lines',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuranIndexRoute = QuranIndexRouteImport.update({
+  id: '/quran/',
+  path: '/quran/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuranSurahIdRoute = QuranSurahIdRouteImport.update({
+  id: '/quran/$surahId',
+  path: '/quran/$surahId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/ai': typeof AiRoute
+  '/calendar': typeof CalendarRoute
+  '/duas': typeof DuasRoute
+  '/ibadaat': typeof IbadaatRoute
+  '/more': typeof MoreRoute
+  '/names': typeof NamesRoute
+  '/qaida': typeof QaidaRoute
+  '/qibla': typeof QiblaRoute
+  '/search': typeof SearchRoute
+  '/seerah': typeof SeerahRoute
+  '/settings': typeof SettingsRoute
+  '/tasbeeh': typeof TasbeehRoute
+  '/tracker': typeof TrackerRoute
+  '/api/ai': typeof ApiAiRoute
+  '/hadith/$bookId': typeof HadithBookIdRoute
+  '/mushaf/$lines': typeof MushafLinesRoute
+  '/quran/$surahId': typeof QuranSurahIdRoute
+  '/hadith/': typeof HadithIndexRoute
+  '/quran/': typeof QuranIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/ai': typeof AiRoute
+  '/calendar': typeof CalendarRoute
+  '/duas': typeof DuasRoute
+  '/ibadaat': typeof IbadaatRoute
+  '/more': typeof MoreRoute
+  '/names': typeof NamesRoute
+  '/qaida': typeof QaidaRoute
+  '/qibla': typeof QiblaRoute
+  '/search': typeof SearchRoute
+  '/seerah': typeof SeerahRoute
+  '/settings': typeof SettingsRoute
+  '/tasbeeh': typeof TasbeehRoute
+  '/tracker': typeof TrackerRoute
+  '/api/ai': typeof ApiAiRoute
+  '/hadith/$bookId': typeof HadithBookIdRoute
+  '/mushaf/$lines': typeof MushafLinesRoute
+  '/quran/$surahId': typeof QuranSurahIdRoute
+  '/hadith': typeof HadithIndexRoute
+  '/quran': typeof QuranIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/ai': typeof AiRoute
+  '/calendar': typeof CalendarRoute
+  '/duas': typeof DuasRoute
+  '/ibadaat': typeof IbadaatRoute
+  '/more': typeof MoreRoute
+  '/names': typeof NamesRoute
+  '/qaida': typeof QaidaRoute
+  '/qibla': typeof QiblaRoute
+  '/search': typeof SearchRoute
+  '/seerah': typeof SeerahRoute
+  '/settings': typeof SettingsRoute
+  '/tasbeeh': typeof TasbeehRoute
+  '/tracker': typeof TrackerRoute
+  '/api/ai': typeof ApiAiRoute
+  '/hadith/$bookId': typeof HadithBookIdRoute
+  '/mushaf/$lines': typeof MushafLinesRoute
+  '/quran/$surahId': typeof QuranSurahIdRoute
+  '/hadith/': typeof HadithIndexRoute
+  '/quran/': typeof QuranIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/ai'
+    | '/calendar'
+    | '/duas'
+    | '/ibadaat'
+    | '/more'
+    | '/names'
+    | '/qaida'
+    | '/qibla'
+    | '/search'
+    | '/seerah'
+    | '/settings'
+    | '/tasbeeh'
+    | '/tracker'
+    | '/api/ai'
+    | '/hadith/$bookId'
+    | '/mushaf/$lines'
+    | '/quran/$surahId'
+    | '/hadith/'
+    | '/quran/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/ai'
+    | '/calendar'
+    | '/duas'
+    | '/ibadaat'
+    | '/more'
+    | '/names'
+    | '/qaida'
+    | '/qibla'
+    | '/search'
+    | '/seerah'
+    | '/settings'
+    | '/tasbeeh'
+    | '/tracker'
+    | '/api/ai'
+    | '/hadith/$bookId'
+    | '/mushaf/$lines'
+    | '/quran/$surahId'
+    | '/hadith'
+    | '/quran'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/ai'
+    | '/calendar'
+    | '/duas'
+    | '/ibadaat'
+    | '/more'
+    | '/names'
+    | '/qaida'
+    | '/qibla'
+    | '/search'
+    | '/seerah'
+    | '/settings'
+    | '/tasbeeh'
+    | '/tracker'
+    | '/api/ai'
+    | '/hadith/$bookId'
+    | '/mushaf/$lines'
+    | '/quran/$surahId'
+    | '/hadith/'
+    | '/quran/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  AiRoute: typeof AiRoute
+  CalendarRoute: typeof CalendarRoute
+  DuasRoute: typeof DuasRoute
+  IbadaatRoute: typeof IbadaatRoute
+  MoreRoute: typeof MoreRoute
+  NamesRoute: typeof NamesRoute
+  QaidaRoute: typeof QaidaRoute
+  QiblaRoute: typeof QiblaRoute
+  SearchRoute: typeof SearchRoute
+  SeerahRoute: typeof SeerahRoute
+  SettingsRoute: typeof SettingsRoute
+  TasbeehRoute: typeof TasbeehRoute
+  TrackerRoute: typeof TrackerRoute
+  ApiAiRoute: typeof ApiAiRoute
+  HadithBookIdRoute: typeof HadithBookIdRoute
+  MushafLinesRoute: typeof MushafLinesRoute
+  QuranSurahIdRoute: typeof QuranSurahIdRoute
+  HadithIndexRoute: typeof HadithIndexRoute
+  QuranIndexRoute: typeof QuranIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +312,171 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai': {
+      id: '/ai'
+      path: '/ai'
+      fullPath: '/ai'
+      preLoaderRoute: typeof AiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/duas': {
+      id: '/duas'
+      path: '/duas'
+      fullPath: '/duas'
+      preLoaderRoute: typeof DuasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ibadaat': {
+      id: '/ibadaat'
+      path: '/ibadaat'
+      fullPath: '/ibadaat'
+      preLoaderRoute: typeof IbadaatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/more': {
+      id: '/more'
+      path: '/more'
+      fullPath: '/more'
+      preLoaderRoute: typeof MoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/names': {
+      id: '/names'
+      path: '/names'
+      fullPath: '/names'
+      preLoaderRoute: typeof NamesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/qaida': {
+      id: '/qaida'
+      path: '/qaida'
+      fullPath: '/qaida'
+      preLoaderRoute: typeof QaidaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/qibla': {
+      id: '/qibla'
+      path: '/qibla'
+      fullPath: '/qibla'
+      preLoaderRoute: typeof QiblaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seerah': {
+      id: '/seerah'
+      path: '/seerah'
+      fullPath: '/seerah'
+      preLoaderRoute: typeof SeerahRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasbeeh': {
+      id: '/tasbeeh'
+      path: '/tasbeeh'
+      fullPath: '/tasbeeh'
+      preLoaderRoute: typeof TasbeehRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tracker': {
+      id: '/tracker'
+      path: '/tracker'
+      fullPath: '/tracker'
+      preLoaderRoute: typeof TrackerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ai': {
+      id: '/api/ai'
+      path: '/api/ai'
+      fullPath: '/api/ai'
+      preLoaderRoute: typeof ApiAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hadith/': {
+      id: '/hadith/'
+      path: '/hadith'
+      fullPath: '/hadith/'
+      preLoaderRoute: typeof HadithIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hadith/$bookId': {
+      id: '/hadith/$bookId'
+      path: '/hadith/$bookId'
+      fullPath: '/hadith/$bookId'
+      preLoaderRoute: typeof HadithBookIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mushaf/$lines': {
+      id: '/mushaf/$lines'
+      path: '/mushaf/$lines'
+      fullPath: '/mushaf/$lines'
+      preLoaderRoute: typeof MushafLinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quran/': {
+      id: '/quran/'
+      path: '/quran'
+      fullPath: '/quran/'
+      preLoaderRoute: typeof QuranIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quran/$surahId': {
+      id: '/quran/$surahId'
+      path: '/quran/$surahId'
+      fullPath: '/quran/$surahId'
+      preLoaderRoute: typeof QuranSurahIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  AiRoute: AiRoute,
+  CalendarRoute: CalendarRoute,
+  DuasRoute: DuasRoute,
+  IbadaatRoute: IbadaatRoute,
+  MoreRoute: MoreRoute,
+  NamesRoute: NamesRoute,
+  QaidaRoute: QaidaRoute,
+  QiblaRoute: QiblaRoute,
+  SearchRoute: SearchRoute,
+  SeerahRoute: SeerahRoute,
+  SettingsRoute: SettingsRoute,
+  TasbeehRoute: TasbeehRoute,
+  TrackerRoute: TrackerRoute,
+  ApiAiRoute: ApiAiRoute,
+  HadithBookIdRoute: HadithBookIdRoute,
+  MushafLinesRoute: MushafLinesRoute,
+  QuranSurahIdRoute: QuranSurahIdRoute,
+  HadithIndexRoute: HadithIndexRoute,
+  QuranIndexRoute: QuranIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
