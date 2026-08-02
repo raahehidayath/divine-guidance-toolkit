@@ -111,9 +111,36 @@ const HD = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1";
 
 export type HadithItem = { hadithnumber: number; text: string; reference?: { book: number; hadith: number } };
 
-export async function fetchHadithSection(book: string, langCode: string, section: string) {
+export type HadithEdition = { name: string; language: string; author: string; direction: string };
+
+/** Every edition the API actually publishes for a book, so the language picker can
+ *  only offer languages that exist instead of silently falling back to English. */
+export async function fetchHadithEditions(book: string): Promise<HadithEdition[]> {
+  const all = await j<Record<string, { collection: HadithEdition[] }>>(`${HD}/editions.json`);
+  const list = all[book]?.collection ?? [];
+  // keep one edition per language (the first, which is the primary translation)
+  const seen = new Set<string>();
+  return list.filter((e) => {
+    if (seen.has(e.language)) return false;
+    seen.add(e.language);
+    return true;
+  });
+}
+
+export async function fetchHadithSection(
+  book: string,
+  langCode: string,
+  section: string,
+  editions?: HadithEdition[],
+) {
   const lang = getLanguage(langCode);
-  const tryEditions = [`${lang.hadithPrefix}-${book}`, `eng-${book}`, `ara-${book}`];
+  const byLanguage = editions?.find((e) => e.language.toLowerCase() === lang.englishName?.toLowerCase());
+  const tryEditions = [
+    ...(byLanguage ? [byLanguage.name] : []),
+    `${lang.hadithPrefix}-${book}`,
+    `eng-${book}`,
+    `ara-${book}`,
+  ];
   for (const ed of tryEditions) {
     try {
       const d = await j<{ hadiths: HadithItem[]; metadata: { name: string; section: string } }>(
