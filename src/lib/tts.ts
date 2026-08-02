@@ -22,23 +22,35 @@ function profile(id: string) {
   return VOICE_PROFILES.find((p) => p.id === id) ?? VOICE_PROFILES[VOICE_PROFILES.length - 1]!;
 }
 
+/** Higher-quality engines first: neural/online voices sound far better than
+ *  the compact offline fallbacks most phones ship with. */
+const QUALITY_HINTS = ["natural", "neural", "online", "enhanced", "premium", "wavenet", "google"];
+
+function score(v: SpeechSynthesisVoice) {
+  const n = v.name.toLowerCase();
+  let s = 0;
+  QUALITY_HINTS.forEach((h, i) => {
+    if (n.includes(h)) s += QUALITY_HINTS.length - i;
+  });
+  if (!v.localService) s += 3;
+  return s;
+}
+
 function pickVoice(langTag: string, profileId: string) {
   const voices = window.speechSynthesis.getVoices();
   const base = String(langTag.split("-")[0]);
+  const exact = voices.filter((v) => v.lang.toLowerCase().replace("_", "-") === langTag.toLowerCase());
   const inLang = voices.filter((v) => v.lang.toLowerCase().startsWith(base));
-  const pool = inLang.length ? inLang : voices;
+  const pool = (exact.length ? exact : inLang.length ? inLang : voices).slice().sort((a, b) => score(b) - score(a));
   const wanted = profile(profileId).match;
 
   for (const hint of wanted) {
     const hit = pool.find((v) => v.name.toLowerCase().includes(hint));
     if (hit) return hit;
   }
-  return (
-    pool.find((v) => v.lang.toLowerCase() === langTag.toLowerCase()) ??
-    pool[0] ??
-    null
-  );
+  return pool[0] ?? null;
 }
+
 
 export type SpeakOptions = {
   rate?: number;
