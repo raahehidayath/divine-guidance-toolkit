@@ -148,12 +148,40 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+/** Whatever is playing must stop when the user navigates away, goes back,
+ *  or sends the app to the background — never audio in the background. */
+function AudioGuard() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, [pathname]);
+
+  useEffect(() => {
+    const onHide = () => {
+      if (document.visibilityState === "hidden") stopAllAudio();
+    };
+    document.addEventListener("visibilitychange", onHide);
+    window.addEventListener("pagehide", stopAllAudio);
+    window.addEventListener("popstate", stopAllAudio);
+    return () => {
+      document.removeEventListener("visibilitychange", onHide);
+      window.removeEventListener("pagehide", stopAllAudio);
+      window.removeEventListener("popstate", stopAllAudio);
+      stopAllAudio();
+    };
+  }, []);
+
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
+        <AudioGuard />
         <AppShell>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
@@ -162,3 +190,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
