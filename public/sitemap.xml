@@ -17,4 +17,5 @@
   <url><loc>/ai</loc><priority>0.6</priority></url>
   <url><loc>/search</loc><priority>0.5</priority></url>
   <url><loc>/settings</loc><priority>0.4</priority></url>
+  <url><loc>https://divine-guidance-toolkit.lovable.app/halal</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

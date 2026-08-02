@@ -36,12 +36,35 @@ function score(v: SpeechSynthesisVoice) {
   return s;
 }
 
+/** Common female voice names shipped by iOS, Android, Windows and Chrome.
+ *  Recitation, qaida and tafseer narration must be a male voice, so these are removed. */
+const FEMALE_HINTS = [
+  "female", "woman", "samantha", "victoria", "karen", "moira", "tessa", "fiona", "veena", "kanya",
+  "zira", "hazel", "susan", "linda", "heera", "kalpana", "amira", "laila", "salma", "hoda", "zeina",
+  "sara", "maryam", "google us english", "asal", "nicky", "allison", "ava", "joanna", "aria", "jenny",
+  "michelle", "clara", "isha", "swara", "lekha", "rishi female",
+];
+
+const MALE_HINTS = ["male", "man", "rishi", "hemant", "daniel", "fred", "aaron", "alex", "oliver", "george", "guy", "ravi", "majed", "tarik", "maged", "yelda", "naayf"];
+
+function isFemale(v: SpeechSynthesisVoice) {
+  const n = v.name.toLowerCase();
+  return FEMALE_HINTS.some((h) => n.includes(h));
+}
+
 function pickVoice(langTag: string, profileId: string) {
   const voices = window.speechSynthesis.getVoices();
   const base = String(langTag.split("-")[0]);
   const exact = voices.filter((v) => v.lang.toLowerCase().replace("_", "-") === langTag.toLowerCase());
   const inLang = voices.filter((v) => v.lang.toLowerCase().startsWith(base));
-  const pool = (exact.length ? exact : inLang.length ? inLang : voices).slice().sort((a, b) => score(b) - score(a));
+  const all = exact.length ? exact : inLang.length ? inLang : voices;
+  /* prefer a male voice; only fall back to anything else when the device has none */
+  const male = all.filter((v) => !isFemale(v));
+  const pool = (male.length ? male : all).slice().sort((a, b) => {
+    const bonus = (v: SpeechSynthesisVoice) =>
+      MALE_HINTS.some((h) => v.name.toLowerCase().includes(h)) ? 5 : 0;
+    return score(b) + bonus(b) - (score(a) + bonus(a));
+  });
   const wanted = profile(profileId).match;
 
   for (const hint of wanted) {

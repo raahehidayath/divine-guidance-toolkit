@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Card, SectionTitle } from "@/components/AppShell";
-import { fetchHadithInfo, fetchHadithSection } from "@/lib/quran-api";
+import { fetchHadithEditions, fetchHadithInfo, fetchHadithSection } from "@/lib/quran-api";
 import { HADITH_BOOKS, LANGUAGES, getLanguage } from "@/lib/islamic-data";
 import { useSettings } from "@/lib/settings";
 
@@ -27,13 +27,28 @@ function HadithBook() {
   const book = HADITH_BOOKS.find((b) => b.id === bookId);
 
   const info = useQuery({ queryKey: ["hadith-info", bookId], queryFn: () => fetchHadithInfo(bookId), staleTime: Infinity });
+  const editions = useQuery({
+    queryKey: ["hadith-editions", bookId],
+    queryFn: () => fetchHadithEditions(bookId),
+    staleTime: Infinity,
+  });
   const data = useQuery({
-    queryKey: ["hadith", bookId, settings.lang, section],
-    queryFn: () => fetchHadithSection(bookId, settings.lang, section),
+    queryKey: ["hadith", bookId, settings.lang, section, editions.data?.length ?? 0],
+    queryFn: () => fetchHadithSection(bookId, settings.lang, section, editions.data),
     staleTime: 1000 * 60 * 30,
+    enabled: !editions.isLoading,
   });
 
   const sections = Object.entries(info.data?.sections ?? {}).filter(([, name]) => name);
+
+  /* Only offer languages this collection is actually translated into. */
+  const availableLangs = editions.data
+    ? LANGUAGES.filter((l) => editions.data.some((e) => e.language.toLowerCase() === l.label.toLowerCase()))
+    : LANGUAGES;
+  const usedEdition = data.data?.edition ?? "";
+  const usedLanguage = editions.data?.find((e) => e.name === usedEdition)?.language ?? "";
+  const fellBack = Boolean(usedLanguage) && usedLanguage.toLowerCase() !== lang.label.toLowerCase();
+  const rtlText = /^(ara|urd|fas|per)/.test(usedEdition) || (usedEdition.startsWith("ara") ?? false);
 
   return (
     <div className="space-y-6">
@@ -50,7 +65,7 @@ function HadithBook() {
             onChange={(e) => update({ lang: e.target.value as typeof settings.lang })}
             className="rounded-lg border border-border bg-background px-2 py-1"
           >
-            {LANGUAGES.map((l) => (
+            {availableLangs.map((l) => (
               <option key={l.code} value={l.code}>
                 {l.label}
               </option>
@@ -73,6 +88,13 @@ function HadithBook() {
         </label>
       </Card>
 
+      {fellBack && (
+        <p role="status" className="text-sm text-muted-foreground">
+          {book?.name ?? bookId} is not translated into {lang.label} in our source, so it is being shown in{" "}
+          {usedLanguage}.
+        </p>
+      )}
+
       {data.isLoading && (
         <div className="space-y-3">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -94,8 +116,13 @@ function HadithBook() {
               )}
             </div>
             <p
+              dir={rtlText ? "rtl" : "ltr"}
               className={`mt-3 text-[15px] leading-relaxed ${
-                settings.lang === "ur" ? "urdu-text text-right" : lang.rtl ? "arabic-ayah text-right" : ""
+                usedEdition.startsWith("urd")
+                  ? "urdu-text text-right"
+                  : rtlText
+                    ? "arabic-ayah text-right"
+                    : ""
               }`}
             >
               {h.text}

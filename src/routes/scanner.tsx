@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AlertTriangle, Camera, CheckCircle2, HelpCircle, Info, ScanBarcode, StopCircle, X } from "lucide-react";
+import { AlertTriangle, Camera, CheckCircle2, HelpCircle, ImageIcon, Info, ScanBarcode, StopCircle, Trash2, X } from "lucide-react";
 import { Card, SectionTitle } from "@/components/AppShell";
 import { analyseBarcode, type ScanResult } from "@/lib/extra-data";
 
@@ -31,6 +31,9 @@ function Scanner() {
   const [scanning, setScanning] = useState(false);
   const [cameraError, setCameraError] = useState("");
   const [history, setHistory] = useState<ScanResult[]>([]);
+  const [gallery, setGallery] = useState<{ id: string; src: string; code: string; verdict: ScanResult["verdict"] }[]>([]);
+  const [galleryError, setGalleryError] = useState("");
+  const [preview, setPreview] = useState<string | null>(null);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -68,6 +71,53 @@ function Scanner() {
       setError("");
       setResult(r);
       remember(r);
+    },
+    [remember],
+  );
+
+  /* ---- Gallery: pick a photo of the barcode from the phone and decode it ---- */
+  const readFiles = useCallback(
+    async (files: FileList | null) => {
+      if (!files?.length) return;
+      setGalleryError("");
+      const Detector = (window as unknown as { BarcodeDetector?: new (o?: unknown) => { detect: (s: CanvasImageSource) => Promise<{ rawValue: string }[]> } }).BarcodeDetector;
+      const detector = Detector ? new Detector({ formats: ["ean_13", "ean_8", "upc_a", "upc_e"] }) : null;
+      let failed = 0;
+
+      for (const file of Array.from(files).slice(0, 8)) {
+        const src = URL.createObjectURL(file);
+        let code = "";
+        if (detector) {
+          try {
+            const bitmap = await createImageBitmap(file);
+            const found = await detector.detect(bitmap);
+            code = found[0]?.rawValue ?? "";
+            bitmap.close();
+          } catch {
+            /* unreadable image */
+          }
+        }
+        const r = code ? analyseBarcode(code) : null;
+        if (r) {
+          setInput(r.code);
+          setResult(r);
+          setError("");
+          remember(r);
+        } else {
+          failed += 1;
+        }
+        setGallery((prev) =>
+          [{ id: `${file.name}-${Date.now()}-${Math.random()}`, src, code: r?.code ?? "Not detected", verdict: r?.verdict ?? "unknown" }, ...prev].slice(0, 12),
+        );
+      }
+
+      if (failed) {
+        setGalleryError(
+          detector
+            ? "Some photos could not be read. Crop closer to the bars, keep them straight and well lit, or type the digits below."
+            : "This browser cannot read barcodes from photos. The images are saved below — type the digits underneath the bars to check them.",
+        );
+      }
     },
     [remember],
   );
@@ -148,7 +198,28 @@ function Scanner() {
               <StopCircle className="size-4" aria-hidden /> Stop camera
             </button>
           )}
+
+          <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold hover:text-primary focus-within:ring-2 focus-within:ring-primary">
+            <ImageIcon className="size-4" aria-hidden /> Choose from gallery
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              className="sr-only"
+              onChange={(e) => {
+                void readFiles(e.target.files);
+                e.target.value = "";
+              }}
+            />
+          </label>
         </div>
+
+        {galleryError && (
+          <p role="status" className="flex items-start gap-2 text-sm text-muted-foreground">
+            <Info className="mt-0.5 size-4 shrink-0" aria-hidden />
+            {galleryError}
+          </p>
+        )}
 
         {cameraError && (
           <p role="status" className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -215,6 +286,57 @@ function Scanner() {
           <li>• Use the result as a first check, then confirm with the label or the manufacturer.</li>
         </ul>
       </Card>
+
+      {gallery.length > 0 && (
+        <section aria-labelledby="scan-gallery" className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 id="scan-gallery" className="font-display text-xl">
+              Gallery
+            </h2>
+            <button
+              onClick={() => {
+                gallery.forEach((g) => URL.revokeObjectURL(g.src));
+                setGallery([]);
+              }}
+              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-border px-4 text-sm text-muted-foreground hover:text-primary"
+            >
+              <Trash2 className="size-4" aria-hidden /> Clear gallery
+            </button>
+          </div>
+          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {gallery.map((g) => (
+              <li key={g.id}>
+                <button
+                  onClick={() => setPreview(g.src)}
+                  className="group block w-full overflow-hidden rounded-2xl border border-border text-left focus-visible:ring-2 focus-visible:ring-primary"
+                  aria-label={`View full size photo of barcode ${g.code}`}
+                >
+                  <img src={g.src} alt={`Scanned product barcode ${g.code}`} loading="lazy" className="h-32 w-full object-cover transition group-hover:scale-105" />
+                  <span className="block truncate px-3 py-2 font-mono text-xs">{g.code}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {preview && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Barcode photo preview"
+          className="fixed inset-0 z-50 grid place-items-center bg-background/95 p-4"
+          onClick={() => setPreview(null)}
+        >
+          <img src={preview} alt="Full size barcode photo" className="max-h-[80dvh] w-auto max-w-full rounded-2xl" />
+          <button
+            onClick={() => setPreview(null)}
+            className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold"
+          >
+            <X className="size-4" aria-hidden /> Close
+          </button>
+        </div>
+      )}
 
       {history.length > 0 && (
         <section aria-labelledby="scan-history" className="space-y-3">

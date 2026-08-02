@@ -14,6 +14,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AiRouteImport } from './routes/ai'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as DuasRouteImport } from './routes/duas'
+import { Route as HalalRouteImport } from './routes/halal'
 import { Route as IbadaatRouteImport } from './routes/ibadaat'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as NaatsRouteImport } from './routes/naats'
@@ -57,6 +58,11 @@ const CalendarRoute = CalendarRouteImport.update({
 const DuasRoute = DuasRouteImport.update({
   id: '/duas',
   path: '/duas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HalalRoute = HalalRouteImport.update({
+  id: '/halal',
+  path: '/halal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IbadaatRoute = IbadaatRouteImport.update({
@@ -161,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/ai': typeof AiRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
+  '/halal': typeof HalalRoute
   '/ibadaat': typeof IbadaatRoute
   '/more': typeof MoreRoute
   '/naats': typeof NaatsRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/ai': typeof AiRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
+  '/halal': typeof HalalRoute
   '/ibadaat': typeof IbadaatRoute
   '/more': typeof MoreRoute
   '/naats': typeof NaatsRoute
@@ -214,6 +222,7 @@ export interface FileRoutesById {
   '/ai': typeof AiRoute
   '/calendar': typeof CalendarRoute
   '/duas': typeof DuasRoute
+  '/halal': typeof HalalRoute
   '/ibadaat': typeof IbadaatRoute
   '/more': typeof MoreRoute
   '/naats': typeof NaatsRoute
@@ -242,6 +251,7 @@ export interface FileRouteTypes {
     | '/ai'
     | '/calendar'
     | '/duas'
+    | '/halal'
     | '/ibadaat'
     | '/more'
     | '/naats'
@@ -268,6 +278,7 @@ export interface FileRouteTypes {
     | '/ai'
     | '/calendar'
     | '/duas'
+    | '/halal'
     | '/ibadaat'
     | '/more'
     | '/naats'
@@ -294,6 +305,7 @@ export interface FileRouteTypes {
     | '/ai'
     | '/calendar'
     | '/duas'
+    | '/halal'
     | '/ibadaat'
     | '/more'
     | '/naats'
@@ -321,6 +333,7 @@ export interface RootRouteChildren {
   AiRoute: typeof AiRoute
   CalendarRoute: typeof CalendarRoute
   DuasRoute: typeof DuasRoute
+  HalalRoute: typeof HalalRoute
   IbadaatRoute: typeof IbadaatRoute
   MoreRoute: typeof MoreRoute
   NaatsRoute: typeof NaatsRoute
@@ -377,6 +390,13 @@ declare module '@tanstack/react-router' {
       path: '/duas'
       fullPath: '/duas'
       preLoaderRoute: typeof DuasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/halal': {
+      id: '/halal'
+      path: '/halal'
+      fullPath: '/halal'
+      preLoaderRoute: typeof HalalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ibadaat': {
@@ -521,6 +541,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiRoute: AiRoute,
   CalendarRoute: CalendarRoute,
   DuasRoute: DuasRoute,
+  HalalRoute: HalalRoute,
   IbadaatRoute: IbadaatRoute,
   MoreRoute: MoreRoute,
   NaatsRoute: NaatsRoute,

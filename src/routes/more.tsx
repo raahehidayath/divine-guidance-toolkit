@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Baby, Bot, CalendarDays, Compass, Heart, ListChecks, Mail, Music4, ScanBarcode, Search, Settings, Shield, Sparkle, Star, Users } from "lucide-react";
+import { Baby, Bot, ShieldCheck, CalendarDays, Compass, Heart, ListChecks, Mail, Music4, ScanBarcode, Search, Settings, Shield, Sparkle, Star, Users } from "lucide-react";
 import { Card, SectionTitle } from "@/components/AppShell";
 import { CREATORS } from "@/lib/islamic-data";
 
@@ -20,6 +20,7 @@ const LINKS = [
   { to: "/names", label: "99 Names of Allah", icon: Star, note: "Asma ul Husna with meanings" },
   { to: "/naats", label: "Naats & Salawat", icon: Music4, note: "Praise of the Prophet ﷺ with meaning" },
   { to: "/scanner", label: "Barcode Scanner", icon: ScanBarcode, note: "Check if a product is Israeli (729)" },
+  { to: "/halal", label: "Halal or Haram", icon: ShieldCheck, note: "Food, E-numbers, money & daily life" },
   { to: "/prophets", label: "Prophets & Families", icon: Users, note: "Adam AS to Muhammad ﷺ, wives & children" },
   { to: "/tasbeeh", label: "Digital Tasbeeh", icon: ListChecks, note: "All the common adhkar" },
   { to: "/duas", label: "Duas & Azkar", icon: Heart, note: "Arabic, transliteration, meaning" },
