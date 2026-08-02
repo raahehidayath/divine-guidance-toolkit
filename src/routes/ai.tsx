@@ -7,9 +7,9 @@ import { useSettings } from "@/lib/settings";
 export const Route = createFileRoute("/ai")({
   head: () => ({
     meta: [
-      { title: "Islamic AI Assistant | Rah e Hidayath" },
+      { title: "Islamic AI Assistant | Raah e Hidayath" },
       { name: "description", content: "Ask any question about the Quran, hadith, fiqh, worship and Islamic history and get an answer grounded in authentic sources." },
-      { property: "og:title", content: "Islamic AI Assistant | Rah e Hidayath" },
+      { property: "og:title", content: "Islamic AI Assistant | Raah e Hidayath" },
       { property: "og:description", content: "Answers grounded in Quran and authentic Sunnah, in your language." },
     ],
   }),

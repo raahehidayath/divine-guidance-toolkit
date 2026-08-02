@@ -6,9 +6,9 @@ import { CREATORS } from "@/lib/islamic-data";
 export const Route = createFileRoute("/more")({
   head: () => ({
     meta: [
-      { title: "More — Qibla, Duas, Tasbeeh, Qaida & Seerah | Rah e Hidayath" },
+      { title: "More — Qibla, Duas, Tasbeeh, Qaida & Seerah | Raah e Hidayath" },
       { name: "description", content: "Qibla direction, 99 Names of Allah, tasbeeh counter, duas, Noorani Qaida, Hijri calendar, salah tracker, settings and contact." },
-      { property: "og:title", content: "More Islamic Tools | Rah e Hidayath" },
+      { property: "og:title", content: "More Islamic Tools | Raah e Hidayath" },
       { property: "og:description", content: "Everything else in one place." },
     ],
   }),
@@ -33,7 +33,7 @@ const LINKS = [
 function More() {
   return (
     <div className="space-y-6">
-      <SectionTitle title="More" subtitle="Every remaining tool of Rah e Hidayath" />
+      <SectionTitle title="More" subtitle="Every remaining tool of Raah e Hidayath" />
       <div className="grid gap-3 sm:grid-cols-2">
         {LINKS.map(({ to, label, icon: Icon, note }, i) => (
           <Link key={to} to={to} style={{ animationDelay: `${i * 35}ms` }} className="animate-rise">

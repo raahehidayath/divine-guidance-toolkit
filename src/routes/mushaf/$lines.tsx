@@ -14,12 +14,12 @@ import {
 export const Route = createFileRoute("/mushaf/$lines")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.lines} Line Quran — One Mushaf Page per Screen | Rah e Hidayath` },
+      { title: `${params.lines} Line Quran — One Mushaf Page per Screen | Raah e Hidayath` },
       {
         name: "description",
         content: `Read the complete Quran in the ${params.lines} line mushaf layout. Exactly one printed Quran page on one page of the site, with fast smooth page turning and full reading controls.`,
       },
-      { property: "og:title", content: `${params.lines} Line Quran | Rah e Hidayath` },
+      { property: "og:title", content: `${params.lines} Line Quran | Raah e Hidayath` },
       { property: "og:description", content: "The complete mushaf — one page per screen, pure reading." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -117,7 +117,7 @@ function MushafReader() {
     const send = () => {
       const ayah = data[Math.floor(Math.random() * data.length)];
       if (!ayah) return;
-      new Notification("Ayah of the day — Rah e Hidayath", {
+      new Notification("Ayah of the day — Raah e Hidayath", {
         body: `${ayah.surahEnglish} ${ayah.surah}:${ayah.numberInSurah}\n${ayah.translation.slice(0, 160)}`,
       });
       localStorage.setItem(key, today());

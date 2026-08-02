@@ -5,9 +5,9 @@ import { HADITH_BOOKS } from "@/lib/islamic-data";
 export const Route = createFileRoute("/hadith/")({
   head: () => ({
     meta: [
-      { title: "Hadith Collections — Bukhari, Muslim & more | Rah e Hidayath" },
+      { title: "Hadith Collections — Bukhari, Muslim & more | Raah e Hidayath" },
       { name: "description", content: "Browse Sahih al-Bukhari, Sahih Muslim, Abu Dawud, Tirmidhi, Nasa'i, Ibn Majah, Muwatta Malik and the Forty Hadith collections in many languages." },
-      { property: "og:title", content: "Hadith Collections | Rah e Hidayath" },
+      { property: "og:title", content: "Hadith Collections | Raah e Hidayath" },
       { property: "og:description", content: "Every major hadith book, chapter by chapter, in your language." },
     ],
   }),

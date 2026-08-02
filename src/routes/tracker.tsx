@@ -6,9 +6,9 @@ import { Card, SectionTitle } from "@/components/AppShell";
 export const Route = createFileRoute("/tracker")({
   head: () => ({
     meta: [
-      { title: "Salah Tracker — Daily Prayer Log | Rah e Hidayath" },
+      { title: "Salah Tracker — Daily Prayer Log | Raah e Hidayath" },
       { name: "description", content: "Track your five daily prayers, keep a weekly streak and never miss a salah again." },
-      { property: "og:title", content: "Salah Tracker | Rah e Hidayath" },
+      { property: "og:title", content: "Salah Tracker | Raah e Hidayath" },
       { property: "og:description", content: "Log your five daily prayers and watch your streak grow." },
     ],
   }),

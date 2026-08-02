@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Rah e Hidayath — Complete Islamic App" },
+      { title: "Raah e Hidayath — Complete Islamic App" },
       {
         name: "description",
         content:
           "Quran with audio, translation and tafseer, hadith books, prayer times, Qibla, duas and Islamic learning in many languages.",
       },
-      { name: "author", content: "Rah e Hidayath" },
-      { property: "og:title", content: "Rah e Hidayath — Complete Islamic App" },
+      { name: "author", content: "Raah e Hidayath" },
+      { property: "og:title", content: "Raah e Hidayath — Complete Islamic App" },
       {
         property: "og:description",
         content: "Quran with audio, translation and tafseer, hadith books, prayer times, Qibla, duas and Islamic learning in many languages.",
@@ -94,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Rah e Hidayath — Complete Islamic App" },
+      { name: "twitter:title", content: "Raah e Hidayath — Complete Islamic App" },
       { name: "twitter:description", content: "Quran with audio, translation and tafseer, hadith books, prayer times, Qibla, duas and Islamic learning in many languages." },
     ],
     links: [

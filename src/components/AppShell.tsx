@@ -23,7 +23,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Link to="/" className="flex items-center gap-3">
             <Logo />
             <span className="leading-tight">
-              <span className="block font-display text-lg tracking-wide text-foreground">Rah e Hidayath</span>
+              <span className="block font-display text-lg tracking-wide text-foreground">Raah e Hidayath</span>
               <span className="block text-[11px] tracking-[0.22em] text-muted-foreground uppercase">
                 The Path of Guidance
               </span>

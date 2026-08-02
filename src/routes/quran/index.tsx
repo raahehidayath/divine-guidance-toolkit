@@ -7,9 +7,9 @@ import { fetchSurahList } from "@/lib/quran-api";
 export const Route = createFileRoute("/quran/")({
   head: () => ({
     meta: [
-      { title: "Al Quran — Read, Listen, Translate & Tafseer | Rah e Hidayath" },
+      { title: "Al Quran — Read, Listen, Translate & Tafseer | Raah e Hidayath" },
       { name: "description", content: "All 114 surahs with Arabic text, recitation audio, translation in many languages, tafseer and full explanation of every ayah." },
-      { property: "og:title", content: "Al Quran — Rah e Hidayath" },
+      { property: "og:title", content: "Al Quran — Raah e Hidayath" },
       { property: "og:description", content: "Read, listen and understand the complete Quran in your language." },
     ],
   }),

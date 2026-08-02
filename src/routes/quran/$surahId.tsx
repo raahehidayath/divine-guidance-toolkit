@@ -11,9 +11,9 @@ import { speak, stopSpeaking, ttsSupported } from "@/lib/tts";
 export const Route = createFileRoute("/quran/$surahId")({
   head: ({ params }) => ({
     meta: [
-      { title: `Surah ${params.surahId} — Read, Listen & Tafseer | Rah e Hidayath` },
+      { title: `Surah ${params.surahId} — Read, Listen & Tafseer | Raah e Hidayath` },
       { name: "description", content: "Arabic text, recitation, translation, tafseer and full explanation of every ayah in your language, each with its own audio." },
-      { property: "og:title", content: `Surah ${params.surahId} | Rah e Hidayath` },
+      { property: "og:title", content: `Surah ${params.surahId} | Raah e Hidayath` },
       { property: "og:description", content: "Read, listen and understand every ayah." },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -15,7 +15,7 @@ const LANG_NAMES: Record<string, string> = {
 const MODEL = "google/gemini-3-flash-preview";
 
 function systemPrompt(mode: Body["mode"], language: string) {
-  const base = `You are "Noor", the scholarly Islamic assistant inside the app "Rah e Hidayath". You always answer fully in ${language}, in the script native to that language. Never mix in another language except for Arabic quotations, which you always follow with a ${language} meaning.`;
+  const base = `You are "Noor", the scholarly Islamic assistant inside the app "Raah e Hidayath". You always answer fully in ${language}, in the script native to that language. Never mix in another language except for Arabic quotations, which you always follow with a ${language} meaning.`;
 
   if (mode === "ayah-explanation") {
     return `${base}

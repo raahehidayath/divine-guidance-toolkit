@@ -13,9 +13,9 @@ import type { LangCode } from "@/lib/islamic-data";
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — Language, Theme & Reciter | Rah e Hidayath" },
+      { title: "Settings — Language, Theme & Reciter | Raah e Hidayath" },
       { name: "description", content: "Control the whole website: light, dark, AMOLED or auto theme, theme and accent colours, fonts, line spacing, reading width, animations, plus language, reciter, translation and tafsir." },
-      { property: "og:title", content: "Settings | Rah e Hidayath" },
+      { property: "og:title", content: "Settings | Raah e Hidayath" },
       { property: "og:description", content: "Personalise the whole app in one place." },
     ],
   }),
@@ -270,7 +270,7 @@ function SettingsPage() {
       </Card>
 
       <Card className="text-center text-sm text-muted-foreground">
-        <p className="font-display text-base text-foreground">Rah e Hidayath</p>
+        <p className="font-display text-base text-foreground">Raah e Hidayath</p>
         <p className="mt-1">Developed by {CREATORS.join(" · ")}</p>
       </Card>
     </div>

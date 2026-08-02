@@ -6,9 +6,9 @@ import { fetchQibla } from "@/lib/quran-api";
 export const Route = createFileRoute("/qibla")({
   head: () => ({
     meta: [
-      { title: "Qibla Direction — Live Compass | Rah e Hidayath" },
+      { title: "Qibla Direction — Live Compass | Raah e Hidayath" },
       { name: "description", content: "Find the exact direction of the Ka'bah from your current location with a live animated compass." },
-      { property: "og:title", content: "Qibla Direction | Rah e Hidayath" },
+      { property: "og:title", content: "Qibla Direction | Raah e Hidayath" },
       { property: "og:description", content: "Live Qibla compass from your location." },
     ],
   }),

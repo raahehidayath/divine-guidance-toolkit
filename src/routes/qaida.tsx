@@ -9,9 +9,9 @@ import { speak, stopSpeaking, ttsSupported } from "@/lib/tts";
 export const Route = createFileRoute("/qaida")({
   head: () => ({
     meta: [
-      { title: "Noorani Qaida — Learn to Read Quran | Rah e Hidayath" },
+      { title: "Noorani Qaida — Learn to Read Quran | Raah e Hidayath" },
       { name: "description", content: "Learn Arabic letters, harakaat, tanween, maddah and tashdeed step by step with an animated guide for children and beginners." },
-      { property: "og:title", content: "Noorani Qaida | Rah e Hidayath" },
+      { property: "og:title", content: "Noorani Qaida | Raah e Hidayath" },
       { property: "og:description", content: "Step-by-step Quran reading lessons for beginners." },
     ],
   }),
