@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -11,8 +12,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { stopAllAudio } from "@/lib/audio-bus";
 import { SettingsProvider } from "@/lib/settings";
 import { AppShell } from "@/components/AppShell";
+
 
 function NotFoundComponent() {
   return (
@@ -108,9 +111,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=Marcellus&family=Noto+Nastaliq+Urdu:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/logo.png" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "Raah e Hidayath",
+          applicationCategory: "LifestyleApplication",
+          operatingSystem: "Web",
+          description:
+            "Quran with audio, translation and tafseer, hadith books, prayer times, Qibla, duas and Islamic learning in many languages.",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        }),
+      },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -131,12 +151,40 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+/** Whatever is playing must stop when the user navigates away, goes back,
+ *  or sends the app to the background — never audio in the background. */
+function AudioGuard() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  useEffect(() => {
+    return () => stopAllAudio();
+  }, [pathname]);
+
+  useEffect(() => {
+    const onHide = () => {
+      if (document.visibilityState === "hidden") stopAllAudio();
+    };
+    document.addEventListener("visibilitychange", onHide);
+    window.addEventListener("pagehide", stopAllAudio);
+    window.addEventListener("popstate", stopAllAudio);
+    return () => {
+      document.removeEventListener("visibilitychange", onHide);
+      window.removeEventListener("pagehide", stopAllAudio);
+      window.removeEventListener("popstate", stopAllAudio);
+      stopAllAudio();
+    };
+  }, []);
+
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
+        <AudioGuard />
         <AppShell>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
@@ -145,3 +193,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
