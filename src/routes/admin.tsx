@@ -1,6 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { BookOpen, LayoutDashboard, LogOut, Mail, Settings2, ShieldCheck, Users } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useId, useRef, useState } from "react";
+import {
+  BookOpen,
+  ExternalLink,
+  LayoutDashboard,
+  LogOut,
+  Mail,
+  Music4,
+  ScanBarcode,
+  Settings2,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
 import { Card, SectionTitle } from "@/components/AppShell";
 import { CREATORS, HADITH_BOOKS, LANGUAGES, RECITERS } from "@/lib/islamic-data";
 
@@ -11,6 +22,8 @@ export const Route = createFileRoute("/admin")({
       { name: "description", content: "Administrator dashboard for managing content, languages, reciters and announcements in Raah e Hidayath." },
       { property: "og:title", content: "Admin Panel | Raah e Hidayath" },
       { property: "og:description", content: "Manage the Raah e Hidayath app." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -21,13 +34,24 @@ const SESSION_KEY = "reh-admin-session";
 const ADMIN_USER = "rahehidayath";
 const ADMIN_PASS = "w@964000";
 
+const FIELD =
+  "min-h-11 w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+const BTN =
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+
 function Admin() {
   const [authed, setAuthed] = useState(false);
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
   const [announcement, setAnnouncement] = useState("");
-  const [saved, setSaved] = useState(false);
+  const [status, setStatus] = useState("");
+
+  const userId = useId();
+  const passId = useId();
+  const errorId = useId();
+  const announcementId = useId();
+  const errorRef = useRef<HTMLParagraphElement | null>(null);
 
   useEffect(() => {
     try {
@@ -49,7 +73,8 @@ function Admin() {
       setAuthed(true);
       setError("");
     } else {
-      setError("Incorrect username or password.");
+      setError("Incorrect username or password. Please try again.");
+      window.setTimeout(() => errorRef.current?.focus(), 0);
     }
   };
 
@@ -62,6 +87,7 @@ function Admin() {
     setAuthed(false);
     setUser("");
     setPass("");
+    setStatus("");
   };
 
   if (!authed) {
@@ -69,25 +95,50 @@ function Admin() {
       <div className="mx-auto max-w-sm space-y-6 py-10">
         <SectionTitle title="Admin Login" subtitle="Authorised personnel only" />
         <Card>
-          <form onSubmit={login} className="space-y-3">
-            <ShieldCheck className="mx-auto size-10 text-primary" />
-            <input
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-              placeholder="Username"
-              autoComplete="username"
-              className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus:shadow-glow"
-            />
-            <input
-              type="password"
-              value={pass}
-              onChange={(e) => setPass(e.target.value)}
-              placeholder="Password"
-              autoComplete="current-password"
-              className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus:shadow-glow"
-            />
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            <button type="submit" className="w-full rounded-xl gradient-hero py-3 text-sm font-semibold text-primary-foreground">
+          <form onSubmit={login} className="space-y-4" aria-describedby={error ? errorId : undefined}>
+            <ShieldCheck className="mx-auto size-10 text-primary" aria-hidden />
+            <h2 className="sr-only">Sign in to the admin panel</h2>
+
+            <div className="space-y-1.5">
+              <label htmlFor={userId} className="block text-sm font-medium">
+                Username
+              </label>
+              <input
+                id={userId}
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
+                autoComplete="username"
+                aria-invalid={error ? true : undefined}
+                className={FIELD}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label htmlFor={passId} className="block text-sm font-medium">
+                Password
+              </label>
+              <input
+                id={passId}
+                type="password"
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
+                autoComplete="current-password"
+                aria-invalid={error ? true : undefined}
+                className={FIELD}
+              />
+            </div>
+
+            <p
+              id={errorId}
+              ref={errorRef}
+              tabIndex={-1}
+              role="alert"
+              className={`text-sm text-destructive ${error ? "" : "sr-only"}`}
+            >
+              {error}
+            </p>
+
+            <button type="submit" className={`${BTN} w-full gradient-hero text-primary-foreground`}>
               Sign in
             </button>
           </form>
@@ -104,73 +155,150 @@ function Admin() {
     { label: "Reciters", value: RECITERS.length, icon: Settings2 },
   ];
 
+  const sections = [
+    { to: "/naats", label: "Naats & Salawat", icon: Music4 },
+    { to: "/scanner", label: "Barcode Scanner", icon: ScanBarcode },
+    { to: "/prophets", label: "Prophets & Families", icon: Users },
+    { to: "/quran", label: "Quran", icon: BookOpen },
+    { to: "/hadith", label: "Hadith", icon: BookOpen },
+    { to: "/settings", label: "App Settings", icon: Settings2 },
+  ];
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <SectionTitle title="Admin Dashboard" subtitle={`Signed in as ${ADMIN_USER}`} />
-        <button onClick={logout} className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:text-primary">
-          <LogOut className="size-4" /> Sign out
+        <button onClick={logout} className={`${BTN} border border-border hover:text-primary`}>
+          <LogOut className="size-4" aria-hidden /> Sign out
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-        {stats.map(({ label, value, icon: Icon }) => (
-          <Card key={label} className="text-center">
-            <Icon className="mx-auto size-5 text-primary" />
-            <p className="mt-2 font-display text-2xl">{value}</p>
-            <p className="text-xs text-muted-foreground">{label}</p>
-          </Card>
-        ))}
-      </div>
+      <p aria-live="polite" className={`text-sm text-primary ${status ? "" : "sr-only"}`}>
+        {status}
+      </p>
 
-      <Card>
-        <p className="font-display text-lg">Home announcement</p>
-        <p className="text-xs text-muted-foreground">Shown as a banner on the home page for all users of this device.</p>
-        <textarea
-          rows={3}
-          value={announcement}
-          onChange={(e) => {
-            setAnnouncement(e.target.value);
-            setSaved(false);
-          }}
-          className="mt-3 w-full rounded-xl border border-border bg-card p-3 text-sm outline-none focus:shadow-glow"
-          placeholder="e.g. Ramadan timetable is now available"
-        />
-        <button
-          onClick={() => {
-            try {
-              localStorage.setItem("reh-announcement", announcement);
-              setSaved(true);
-            } catch {
-              /* ignore */
-            }
-          }}
-          className="mt-3 rounded-full gradient-hero px-5 py-2 text-sm font-semibold text-primary-foreground"
-        >
-          {saved ? "Saved" : "Save announcement"}
-        </button>
-      </Card>
-
-      <Card>
-        <p className="font-display text-lg">Content sources</p>
-        <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-          <li>• Quran text, translations & audio — alquran.cloud</li>
-          <li>• Tafseer — spa5k tafsir_api (Ibn Kathir, Mokhtasar and more)</li>
-          <li>• Hadith collections — fawazahmed0 hadith-api</li>
-          <li>• Prayer times, Qibla, Hijri calendar & Asma ul Husna — aladhan.com</li>
-          <li>• Islamic AI assistant — Lovable AI Gateway</li>
+      <section aria-labelledby="stats-heading" className="space-y-3">
+        <h2 id="stats-heading" className="font-display text-xl">
+          Content at a glance
+        </h2>
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          {stats.map(({ label, value, icon: Icon }) => (
+            <li key={label}>
+              <Card className="text-center">
+                <Icon className="mx-auto size-5 text-primary" aria-hidden />
+                <p className="mt-2 font-display text-2xl">{value}</p>
+                <p className="text-xs text-muted-foreground">{label}</p>
+              </Card>
+            </li>
+          ))}
         </ul>
-      </Card>
+      </section>
 
-      <Card>
-        <p className="flex items-center gap-2 font-display text-lg">
-          <Mail className="size-4 text-primary" /> Support inbox
-        </p>
-        <a href="mailto:rahehidayath@gmail.com" className="mt-1 block text-sm text-primary underline">
-          rahehidayath@gmail.com
-        </a>
-        <p className="mt-3 text-xs text-muted-foreground">App maintained by {CREATORS.join(", ")}.</p>
-      </Card>
+      <section aria-labelledby="sections-heading" className="space-y-3">
+        <h2 id="sections-heading" className="font-display text-xl">
+          Manage sections
+        </h2>
+        <ul className="grid gap-3 sm:grid-cols-3">
+          {sections.map(({ to, label, icon: Icon }) => (
+            <li key={to}>
+              <Link
+                to={to}
+                className="block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <Card className="flex min-h-16 items-center gap-3">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="size-5" aria-hidden />
+                  </span>
+                  <span className="font-medium">{label}</span>
+                  <ExternalLink className="ml-auto size-4 text-muted-foreground" aria-hidden />
+                </Card>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="announcement-heading">
+        <Card>
+          <h2 id="announcement-heading" className="font-display text-lg">
+            Home announcement
+          </h2>
+          <label htmlFor={announcementId} className="mt-1 block text-xs text-muted-foreground">
+            Shown as a banner on the home page for all users of this device.
+          </label>
+          <textarea
+            id={announcementId}
+            rows={3}
+            value={announcement}
+            onChange={(e) => {
+              setAnnouncement(e.target.value);
+              setStatus("");
+            }}
+            className={`${FIELD} mt-3`}
+            placeholder="e.g. Ramadan timetable is now available"
+          />
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              onClick={() => {
+                try {
+                  localStorage.setItem("reh-announcement", announcement);
+                  setStatus("Announcement saved.");
+                } catch {
+                  setStatus("Could not save the announcement on this device.");
+                }
+              }}
+              className={`${BTN} gradient-hero text-primary-foreground`}
+            >
+              Save announcement
+            </button>
+            <button
+              onClick={() => {
+                setAnnouncement("");
+                try {
+                  localStorage.removeItem("reh-announcement");
+                  setStatus("Announcement cleared.");
+                } catch {
+                  /* ignore */
+                }
+              }}
+              className={`${BTN} border border-border hover:text-primary`}
+            >
+              Clear
+            </button>
+          </div>
+        </Card>
+      </section>
+
+      <section aria-labelledby="sources-heading">
+        <Card>
+          <h2 id="sources-heading" className="font-display text-lg">
+            Content sources
+          </h2>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            <li>Quran text, translations &amp; audio — alquran.cloud</li>
+            <li>Tafseer — spa5k tafsir_api (Ibn Kathir, Mokhtasar and more)</li>
+            <li>Hadith collections — fawazahmed0 hadith-api</li>
+            <li>Prayer times, Qibla, Hijri calendar &amp; Asma ul Husna — aladhan.com</li>
+            <li>Barcode origins — GS1 country prefix table</li>
+            <li>Islamic AI assistant — Lovable AI Gateway</li>
+          </ul>
+        </Card>
+      </section>
+
+      <section aria-labelledby="support-heading">
+        <Card>
+          <h2 id="support-heading" className="flex items-center gap-2 font-display text-lg">
+            <Mail className="size-4 text-primary" aria-hidden /> Support inbox
+          </h2>
+          <a
+            href="mailto:rahehidayath@gmail.com"
+            className="mt-1 inline-flex min-h-11 items-center text-sm text-primary underline outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            rahehidayath@gmail.com
+          </a>
+          <p className="mt-3 text-xs text-muted-foreground">App maintained by {CREATORS.join(", ")}.</p>
+        </Card>
+      </section>
     </div>
   );
 }

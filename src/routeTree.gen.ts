@@ -16,9 +16,12 @@ import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as DuasRouteImport } from './routes/duas'
 import { Route as IbadaatRouteImport } from './routes/ibadaat'
 import { Route as MoreRouteImport } from './routes/more'
+import { Route as NaatsRouteImport } from './routes/naats'
 import { Route as NamesRouteImport } from './routes/names'
+import { Route as ProphetsRouteImport } from './routes/prophets'
 import { Route as QaidaRouteImport } from './routes/qaida'
 import { Route as QiblaRouteImport } from './routes/qibla'
+import { Route as ScannerRouteImport } from './routes/scanner'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SeerahRouteImport } from './routes/seerah'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -66,9 +69,19 @@ const MoreRoute = MoreRouteImport.update({
   path: '/more',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NaatsRoute = NaatsRouteImport.update({
+  id: '/naats',
+  path: '/naats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NamesRoute = NamesRouteImport.update({
   id: '/names',
   path: '/names',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProphetsRoute = ProphetsRouteImport.update({
+  id: '/prophets',
+  path: '/prophets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QaidaRoute = QaidaRouteImport.update({
@@ -79,6 +92,11 @@ const QaidaRoute = QaidaRouteImport.update({
 const QiblaRoute = QiblaRouteImport.update({
   id: '/qibla',
   path: '/qibla',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScannerRoute = ScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -145,9 +163,12 @@ export interface FileRoutesByFullPath {
   '/duas': typeof DuasRoute
   '/ibadaat': typeof IbadaatRoute
   '/more': typeof MoreRoute
+  '/naats': typeof NaatsRoute
   '/names': typeof NamesRoute
+  '/prophets': typeof ProphetsRoute
   '/qaida': typeof QaidaRoute
   '/qibla': typeof QiblaRoute
+  '/scanner': typeof ScannerRoute
   '/search': typeof SearchRoute
   '/seerah': typeof SeerahRoute
   '/settings': typeof SettingsRoute
@@ -168,9 +189,12 @@ export interface FileRoutesByTo {
   '/duas': typeof DuasRoute
   '/ibadaat': typeof IbadaatRoute
   '/more': typeof MoreRoute
+  '/naats': typeof NaatsRoute
   '/names': typeof NamesRoute
+  '/prophets': typeof ProphetsRoute
   '/qaida': typeof QaidaRoute
   '/qibla': typeof QiblaRoute
+  '/scanner': typeof ScannerRoute
   '/search': typeof SearchRoute
   '/seerah': typeof SeerahRoute
   '/settings': typeof SettingsRoute
@@ -192,9 +216,12 @@ export interface FileRoutesById {
   '/duas': typeof DuasRoute
   '/ibadaat': typeof IbadaatRoute
   '/more': typeof MoreRoute
+  '/naats': typeof NaatsRoute
   '/names': typeof NamesRoute
+  '/prophets': typeof ProphetsRoute
   '/qaida': typeof QaidaRoute
   '/qibla': typeof QiblaRoute
+  '/scanner': typeof ScannerRoute
   '/search': typeof SearchRoute
   '/seerah': typeof SeerahRoute
   '/settings': typeof SettingsRoute
@@ -217,9 +244,12 @@ export interface FileRouteTypes {
     | '/duas'
     | '/ibadaat'
     | '/more'
+    | '/naats'
     | '/names'
+    | '/prophets'
     | '/qaida'
     | '/qibla'
+    | '/scanner'
     | '/search'
     | '/seerah'
     | '/settings'
@@ -240,9 +270,12 @@ export interface FileRouteTypes {
     | '/duas'
     | '/ibadaat'
     | '/more'
+    | '/naats'
     | '/names'
+    | '/prophets'
     | '/qaida'
     | '/qibla'
+    | '/scanner'
     | '/search'
     | '/seerah'
     | '/settings'
@@ -263,9 +296,12 @@ export interface FileRouteTypes {
     | '/duas'
     | '/ibadaat'
     | '/more'
+    | '/naats'
     | '/names'
+    | '/prophets'
     | '/qaida'
     | '/qibla'
+    | '/scanner'
     | '/search'
     | '/seerah'
     | '/settings'
@@ -287,9 +323,12 @@ export interface RootRouteChildren {
   DuasRoute: typeof DuasRoute
   IbadaatRoute: typeof IbadaatRoute
   MoreRoute: typeof MoreRoute
+  NaatsRoute: typeof NaatsRoute
   NamesRoute: typeof NamesRoute
+  ProphetsRoute: typeof ProphetsRoute
   QaidaRoute: typeof QaidaRoute
   QiblaRoute: typeof QiblaRoute
+  ScannerRoute: typeof ScannerRoute
   SearchRoute: typeof SearchRoute
   SeerahRoute: typeof SeerahRoute
   SettingsRoute: typeof SettingsRoute
@@ -354,11 +393,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/naats': {
+      id: '/naats'
+      path: '/naats'
+      fullPath: '/naats'
+      preLoaderRoute: typeof NaatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/names': {
       id: '/names'
       path: '/names'
       fullPath: '/names'
       preLoaderRoute: typeof NamesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prophets': {
+      id: '/prophets'
+      path: '/prophets'
+      fullPath: '/prophets'
+      preLoaderRoute: typeof ProphetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/qaida': {
@@ -373,6 +426,13 @@ declare module '@tanstack/react-router' {
       path: '/qibla'
       fullPath: '/qibla'
       preLoaderRoute: typeof QiblaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scanner': {
+      id: '/scanner'
+      path: '/scanner'
+      fullPath: '/scanner'
+      preLoaderRoute: typeof ScannerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search': {
@@ -463,9 +523,12 @@ const rootRouteChildren: RootRouteChildren = {
   DuasRoute: DuasRoute,
   IbadaatRoute: IbadaatRoute,
   MoreRoute: MoreRoute,
+  NaatsRoute: NaatsRoute,
   NamesRoute: NamesRoute,
+  ProphetsRoute: ProphetsRoute,
   QaidaRoute: QaidaRoute,
   QiblaRoute: QiblaRoute,
+  ScannerRoute: ScannerRoute,
   SearchRoute: SearchRoute,
   SeerahRoute: SeerahRoute,
   SettingsRoute: SettingsRoute,

@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Baby, Bot, CalendarDays, Compass, Heart, ListChecks, Mail, Search, Settings, Shield, Sparkle, Star } from "lucide-react";
+import { Baby, Bot, CalendarDays, Compass, Heart, ListChecks, Mail, Music4, ScanBarcode, Search, Settings, Shield, Sparkle, Star, Users } from "lucide-react";
 import { Card, SectionTitle } from "@/components/AppShell";
 import { CREATORS } from "@/lib/islamic-data";
 
 export const Route = createFileRoute("/more")({
   head: () => ({
     meta: [
-      { title: "More — Qibla, Duas, Tasbeeh, Qaida & Seerah | Raah e Hidayath" },
-      { name: "description", content: "Qibla direction, 99 Names of Allah, tasbeeh counter, duas, Noorani Qaida, Hijri calendar, salah tracker, settings and contact." },
+      { title: "More — Qibla, Duas, Naats, Barcode Scanner & Seerah | Raah e Hidayath" },
+      { name: "description", content: "Qibla direction, 99 Names of Allah, tasbeeh, duas, naats, product barcode origin scanner, prophets' families, Noorani Qaida, Hijri calendar and salah tracker." },
       { property: "og:title", content: "More Islamic Tools | Raah e Hidayath" },
       { property: "og:description", content: "Everything else in one place." },
     ],
@@ -18,6 +18,9 @@ export const Route = createFileRoute("/more")({
 const LINKS = [
   { to: "/qibla", label: "Qibla Direction", icon: Compass, note: "Live compass from your location" },
   { to: "/names", label: "99 Names of Allah", icon: Star, note: "Asma ul Husna with meanings" },
+  { to: "/naats", label: "Naats & Salawat", icon: Music4, note: "Praise of the Prophet ﷺ with meaning" },
+  { to: "/scanner", label: "Barcode Scanner", icon: ScanBarcode, note: "Check if a product is Israeli (729)" },
+  { to: "/prophets", label: "Prophets & Families", icon: Users, note: "Adam AS to Muhammad ﷺ, wives & children" },
   { to: "/tasbeeh", label: "Digital Tasbeeh", icon: ListChecks, note: "All the common adhkar" },
   { to: "/duas", label: "Duas & Azkar", icon: Heart, note: "Arabic, transliteration, meaning" },
   { to: "/qaida", label: "Noorani Qaida", icon: Baby, note: "Animated learning for children" },
@@ -29,6 +32,7 @@ const LINKS = [
   { to: "/settings", label: "Settings", icon: Settings, note: "Language, theme, reciter, location" },
   { to: "/admin", label: "Admin Panel", icon: Shield, note: "Manage the app" },
 ];
+
 
 function More() {
   return (
