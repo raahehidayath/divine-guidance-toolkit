@@ -7,6 +7,7 @@ import { useSettings } from "@/lib/settings";
 import { ayahAudioUrl, fetchSurah, fetchSurahList, fetchTafsir, type Ayah } from "@/lib/quran-api";
 import { getLanguage, LANGUAGES, RECITERS, VOICE_PROFILES } from "@/lib/islamic-data";
 import { speak, stopSpeaking, ttsSupported } from "@/lib/tts";
+import { setActiveAudio, stopAllAudio } from "@/lib/audio-bus";
 
 export const Route = createFileRoute("/quran/$surahId")({
   head: ({ params }) => ({
@@ -74,9 +75,8 @@ function SurahPage() {
   const ayahs = useMemo(() => data?.ayahs ?? [], [data]);
 
   const stop = useCallback(() => {
-    audioRef.current?.pause();
     audioRef.current = null;
-    stopSpeaking();
+    stopAllAudio();
     setPlaying(null);
   }, []);
 
@@ -109,6 +109,7 @@ function SurahPage() {
         const audio = new Audio(ayahAudioUrl(ayah.number, settings.reciter, settings.audioQuality));
         audio.playbackRate = settings.playbackSpeed;
         audioRef.current = audio;
+        setActiveAudio(audio);
         let played = 0;
         audio.onended = () => {
           played += 1;
