@@ -13,7 +13,12 @@ import {
   Users,
 } from "lucide-react";
 import { Card, SectionTitle } from "@/components/AppShell";
-import { CREATORS, HADITH_BOOKS, LANGUAGES, RECITERS } from "@/lib/islamic-data";
+import { CREATORS, HADITH_BOOKS, LANGUAGES, RECITERS, VOICE_PROFILES } from "@/lib/islamic-data";
+import { HALAL_ITEMS } from "@/lib/halal-data";
+import { NASHEEDS } from "@/lib/nasheed-data";
+import { PROPHETS } from "@/lib/extra-data";
+import { useSettings } from "@/lib/settings";
+import { CALCULATION_METHODS } from "@/lib/islamic-data";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -40,6 +45,7 @@ const BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 function Admin() {
+  const { settings, update, reset } = useSettings();
   const [authed, setAuthed] = useState(false);
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
@@ -153,6 +159,9 @@ function Admin() {
     { label: "Hadith books", value: HADITH_BOOKS.length, icon: BookOpen },
     { label: "Languages", value: LANGUAGES.length, icon: Users },
     { label: "Reciters", value: RECITERS.length, icon: Settings2 },
+    { label: "Nasheeds", value: NASHEEDS.length, icon: Music4 },
+    { label: "Prophets", value: PROPHETS.length, icon: Users },
+    { label: "Halal rulings", value: HALAL_ITEMS.length, icon: ShieldCheck },
   ];
 
   const sections = [
@@ -162,6 +171,7 @@ function Admin() {
     { to: "/quran", label: "Quran", icon: BookOpen },
     { to: "/hadith", label: "Hadith", icon: BookOpen },
     { to: "/settings", label: "App Settings", icon: Settings2 },
+    { to: "/halal", label: "Halal or Haram", icon: ShieldCheck },
   ];
 
   return (
@@ -216,6 +226,130 @@ function Admin() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section aria-labelledby="site-settings-heading" className="space-y-3">
+        <h2 id="site-settings-heading" className="font-display text-xl">
+          Site settings
+        </h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Card className="space-y-3">
+            <h3 className="font-display text-lg">Appearance</h3>
+            <SelectRow
+              label="Theme"
+              value={settings.theme}
+              onChange={(v) => update({ theme: v as typeof settings.theme })}
+              options={[
+                ["light", "Light"],
+                ["dark", "Dark"],
+                ["auto", "Follow device"],
+              ]}
+            />
+            <SelectRow
+              label="Primary colour"
+              value={settings.themeColor}
+              onChange={(v) => update({ themeColor: v as typeof settings.themeColor })}
+              options={[
+                ["emerald", "Emerald"],
+                ["teal", "Teal"],
+                ["navy", "Navy"],
+                ["maroon", "Maroon"],
+              ]}
+            />
+            <NumberRow
+              label="Base font size"
+              value={settings.fontSize}
+              min={12}
+              max={22}
+              onChange={(v) => update({ fontSize: v })}
+            />
+            <NumberRow
+              label="Arabic size"
+              value={settings.arabicSize}
+              min={20}
+              max={54}
+              onChange={(v) => update({ arabicSize: v })}
+            />
+          </Card>
+
+          <Card className="space-y-3">
+            <h3 className="font-display text-lg">Language &amp; audio</h3>
+            <SelectRow
+              label="Default language"
+              value={settings.lang}
+              onChange={(v) => update({ lang: v as typeof settings.lang })}
+              options={LANGUAGES.map((l) => [l.code, l.label] as [string, string])}
+            />
+            <SelectRow
+              label="Reciter"
+              value={settings.reciter}
+              onChange={(v) => update({ reciter: v })}
+              options={RECITERS.map((r) => [r.id, r.name] as [string, string])}
+            />
+            <SelectRow
+              label="Narration voice"
+              value={settings.voiceProfile}
+              onChange={(v) => update({ voiceProfile: v })}
+              options={VOICE_PROFILES.map((v) => [v.id, v.label] as [string, string])}
+            />
+            <NumberRow
+              label="Playback speed"
+              value={settings.playbackSpeed}
+              min={0.5}
+              max={2}
+              step={0.1}
+              onChange={(v) => update({ playbackSpeed: v })}
+            />
+          </Card>
+
+          <Card className="space-y-3">
+            <h3 className="font-display text-lg">Prayer location</h3>
+            <TextRow label="City" value={settings.city} onChange={(v) => update({ city: v })} />
+            <TextRow label="Country" value={settings.country} onChange={(v) => update({ country: v })} />
+            <SelectRow
+              label="Calculation method"
+              value={String(settings.method)}
+              onChange={(v) => update({ method: Number(v) })}
+              options={CALCULATION_METHODS.map((m) => [String(m.id), m.name] as [string, string])}
+            />
+          </Card>
+
+          <Card className="space-y-2">
+            <h3 className="font-display text-lg">Reading features</h3>
+            {(
+              [
+                ["showTransliteration", "Show transliteration"],
+                ["tajweedColors", "Tajweed colours"],
+                ["wordByWord", "Word by word"],
+                ["autoScroll", "Auto scroll while playing"],
+                ["memorization", "Memorisation mode"],
+                ["dailyVerseNotifications", "Daily verse reminder"],
+                ["offlineDownloads", "Allow offline downloads"],
+                ["keepHistory", "Keep reading history"],
+                ["autoBookmark", "Auto bookmark last read"],
+              ] as const
+            ).map(([key, label]) => (
+              <label key={key} className="flex min-h-11 items-center justify-between gap-3 text-sm">
+                <span>{label}</span>
+                <input
+                  type="checkbox"
+                  checked={Boolean(settings[key])}
+                  onChange={(e) => update({ [key]: e.target.checked } as never)}
+                  className="size-5 accent-[hsl(var(--primary))]"
+                />
+              </label>
+            ))}
+            <button
+              onClick={() => {
+                reset();
+                setStatus("All site settings were restored to their defaults.");
+              }}
+              className={`${BTN} mt-2 w-full border border-border hover:text-primary`}
+            >
+              Restore default settings
+            </button>
+          </Card>
+        </div>
       </section>
 
       <section aria-labelledby="announcement-heading">
@@ -299,6 +433,82 @@ function Admin() {
           <p className="mt-3 text-xs text-muted-foreground">App maintained by {CREATORS.join(", ")}.</p>
         </Card>
       </section>
+    </div>
+  );
+}
+
+function SelectRow({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: [string, string][];
+}) {
+  const id = useId();
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor={id} className="block text-sm font-medium">
+        {label}
+      </label>
+      <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className={FIELD}>
+        {options.map(([v, l]) => (
+          <option key={v} value={v}>
+            {l}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+function TextRow({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+  const id = useId();
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor={id} className="block text-sm font-medium">
+        {label}
+      </label>
+      <input id={id} value={value} onChange={(e) => onChange(e.target.value)} className={FIELD} />
+    </div>
+  );
+}
+
+function NumberRow({
+  label,
+  value,
+  min,
+  max,
+  step = 1,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step?: number;
+  onChange: (v: number) => void;
+}) {
+  const id = useId();
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor={id} className="flex items-center justify-between text-sm font-medium">
+        <span>{label}</span>
+        <span className="text-muted-foreground">{value}</span>
+      </label>
+      <input
+        id={id}
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="h-11 w-full accent-[hsl(var(--primary))]"
+      />
     </div>
   );
 }
