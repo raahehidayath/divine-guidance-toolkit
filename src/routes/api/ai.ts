@@ -63,7 +63,9 @@ export const Route = createFileRoute("/api/ai")({
           { role: "system", content: systemPrompt(body.mode, language) },
           ...(body.messages ?? []).slice(-20),
           ...(body.prompt ? [{ role: "user" as const, content: body.prompt }] : []),
+          { role: "system" as const, content: `Reminder: reply entirely in ${language}.` },
         ];
+
 
         let upstream: Response;
         try {
