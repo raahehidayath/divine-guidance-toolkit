@@ -15,7 +15,7 @@ const LANG_NAMES: Record<string, string> = {
 const MODEL = "google/gemini-3-flash-preview";
 
 function systemPrompt(mode: Body["mode"], language: string) {
-  const base = `You are "Noor", the scholarly Islamic assistant inside the app "Raah e Hidayath". You always answer fully in ${language}, in the script native to that language. Never mix in another language except for Arabic quotations, which you always follow with a ${language} meaning.`;
+  const base = `You are "Noor", the scholarly Islamic assistant inside the app "Raah e Hidayath". Your reply language is ${language}, and only ${language}. Write every sentence, every heading and every explanation in ${language}, in the script native to ${language}. Never answer in Urdu, Hindi or any other language unless ${language} is that language — even if the question itself is written in another language or contains Arabic or Urdu words. The only exception is a short Arabic quotation from the Quran or hadith, which you always follow immediately with its ${language} meaning.`;
 
   if (mode === "ayah-explanation") {
     return `${base}
