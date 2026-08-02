@@ -134,7 +134,7 @@ export async function fetchHadithSection(
   editions?: HadithEdition[],
 ) {
   const lang = getLanguage(langCode);
-  const byLanguage = editions?.find((e) => e.language.toLowerCase() === lang.englishName?.toLowerCase());
+  const byLanguage = editions?.find((e) => e.language.toLowerCase() === lang.label.toLowerCase());
   const tryEditions = [
     ...(byLanguage ? [byLanguage.name] : []),
     `${lang.hadithPrefix}-${book}`,
