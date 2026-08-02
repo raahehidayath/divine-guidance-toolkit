@@ -10,9 +10,9 @@ import { useSettings } from "@/lib/settings";
 export const Route = createFileRoute("/hadith/$bookId")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.bookId} hadith collection | Rah e Hidayath` },
+      { title: `${params.bookId} hadith collection | Raah e Hidayath` },
       { name: "description", content: "Read this hadith collection chapter by chapter with translation in your language." },
-      { property: "og:title", content: `Hadith — ${params.bookId} | Rah e Hidayath` },
+      { property: "og:title", content: `Hadith — ${params.bookId} | Raah e Hidayath` },
       { property: "og:description", content: "Authentic hadith, chapter by chapter." },
     ],
   }),

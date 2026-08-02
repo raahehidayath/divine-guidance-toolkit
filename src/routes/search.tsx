@@ -9,9 +9,9 @@ export const Route = createFileRoute("/search")({
   validateSearch: (search: Record<string, unknown>) => ({ q: typeof search["q"] === "string" ? (search["q"] as string) : "" }),
   head: () => ({
     meta: [
-      { title: "Search Everything — Quran, Hadith, Duas & Namaz | Rah e Hidayath" },
-      { name: "description", content: "One search bar for the whole app: every ayah, dua, namaz ruling, hadith book, tajweed rule, seerah event and page of Rah e Hidayath." },
-      { property: "og:title", content: "Search Everything | Rah e Hidayath" },
+      { title: "Search Everything — Quran, Hadith, Duas & Namaz | Raah e Hidayath" },
+      { name: "description", content: "One search bar for the whole app: every ayah, dua, namaz ruling, hadith book, tajweed rule, seerah event and page of Raah e Hidayath." },
+      { property: "og:title", content: "Search Everything | Raah e Hidayath" },
       { property: "og:description", content: "Find any ayah, dua, namaz ruling or lesson instantly by text or voice." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -7,9 +7,9 @@ import { fetchAsmaUlHusna } from "@/lib/quran-api";
 export const Route = createFileRoute("/names")({
   head: () => ({
     meta: [
-      { title: "99 Names of Allah — Asma ul Husna | Rah e Hidayath" },
+      { title: "99 Names of Allah — Asma ul Husna | Raah e Hidayath" },
       { name: "description", content: "All 99 beautiful names of Allah with Arabic, transliteration and meaning." },
-      { property: "og:title", content: "Asma ul Husna | Rah e Hidayath" },
+      { property: "og:title", content: "Asma ul Husna | Raah e Hidayath" },
       { property: "og:description", content: "The 99 names of Allah with meanings." },
     ],
   }),

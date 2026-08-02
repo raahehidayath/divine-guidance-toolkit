@@ -5,9 +5,9 @@ import { SEERAH_FAMILY, SEERAH_TIMELINE } from "@/lib/islamic-data";
 export const Route = createFileRoute("/seerah")({
   head: () => ({
     meta: [
-      { title: "Seerat un Nabi ﷺ — Life, Family & Timeline | Rah e Hidayath" },
+      { title: "Seerat un Nabi ﷺ — Life, Family & Timeline | Raah e Hidayath" },
       { name: "description", content: "The complete life of Prophet Muhammad ﷺ: a year-by-year timeline, his family and companions, with their birth years, ages and roles." },
-      { property: "og:title", content: "Seerat un Nabi ﷺ | Rah e Hidayath" },
+      { property: "og:title", content: "Seerat un Nabi ﷺ | Raah e Hidayath" },
       { property: "og:description", content: "Timeline, family tree and age chart from the blessed life of the Prophet ﷺ." },
     ],
   }),

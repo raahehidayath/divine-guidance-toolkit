@@ -5,9 +5,9 @@ import { Card, SectionTitle } from "@/components/AppShell";
 export const Route = createFileRoute("/calendar")({
   head: () => ({
     meta: [
-      { title: "Hijri Calendar & Islamic Dates | Rah e Hidayath" },
+      { title: "Hijri Calendar & Islamic Dates | Raah e Hidayath" },
       { name: "description", content: "See today's Hijri date, the full Islamic month and the important dates of the Islamic year." },
-      { property: "og:title", content: "Hijri Calendar | Rah e Hidayath" },
+      { property: "og:title", content: "Hijri Calendar | Raah e Hidayath" },
       { property: "og:description", content: "Today's Hijri date and the full Islamic month." },
     ],
   }),

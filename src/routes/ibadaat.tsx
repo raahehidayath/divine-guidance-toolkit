@@ -6,9 +6,9 @@ import { IBADAAT_SECTIONS, SHAHADAH, TAJWEED_RULES } from "@/lib/islamic-data";
 export const Route = createFileRoute("/ibadaat")({
   head: () => ({
     meta: [
-      { title: "Ibadaat — Salah, Fasting, Hajj, Umrah & Janazah | Rah e Hidayath" },
+      { title: "Ibadaat — Salah, Fasting, Hajj, Umrah & Janazah | Raah e Hidayath" },
       { name: "description", content: "Detailed guidance on prayer, wudu, fasting, Zakat, Hajj, Umrah, Namaz-e-Janazah, the Shahadah and the rules of tajweed and stopping." },
-      { property: "og:title", content: "Ibadaat — Complete Worship Guide | Rah e Hidayath" },
+      { property: "og:title", content: "Ibadaat — Complete Worship Guide | Raah e Hidayath" },
       { property: "og:description", content: "Every act of worship explained step by step." },
     ],
   }),

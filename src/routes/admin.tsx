@@ -7,10 +7,10 @@ import { CREATORS, HADITH_BOOKS, LANGUAGES, RECITERS } from "@/lib/islamic-data"
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Admin Panel | Rah e Hidayath" },
-      { name: "description", content: "Administrator dashboard for managing content, languages, reciters and announcements in Rah e Hidayath." },
-      { property: "og:title", content: "Admin Panel | Rah e Hidayath" },
-      { property: "og:description", content: "Manage the Rah e Hidayath app." },
+      { title: "Admin Panel | Raah e Hidayath" },
+      { name: "description", content: "Administrator dashboard for managing content, languages, reciters and announcements in Raah e Hidayath." },
+      { property: "og:title", content: "Admin Panel | Raah e Hidayath" },
+      { property: "og:description", content: "Manage the Raah e Hidayath app." },
       { name: "robots", content: "noindex" },
     ],
   }),

@@ -13,9 +13,9 @@ import { SearchBar } from "@/components/SearchBar";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Rah e Hidayath — Complete Islamic App" },
+      { title: "Raah e Hidayath — Complete Islamic App" },
       { name: "description", content: "Quran with audio, translation and tafseer, hadith books, prayer times, Qibla, duas and Islamic learning in many languages." },
-      { property: "og:title", content: "Rah e Hidayath — Complete Islamic App" },
+      { property: "og:title", content: "Raah e Hidayath — Complete Islamic App" },
       { property: "og:description", content: "Quran with audio, translation and tafseer, hadith books, prayer times, Qibla, duas and Islamic learning in many languages." },
     ],
   }),
@@ -60,7 +60,7 @@ function Index() {
         </svg>
         <p className="relative text-xs uppercase tracking-[0.3em] text-accent">Bismillah</p>
         <p className="relative mt-3 arabic-ayah text-3xl text-accent sm:text-4xl">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
-        <h2 className="relative mt-4 font-display text-2xl sm:text-3xl">Rah e Hidayath — The Path of Guidance</h2>
+        <h2 className="relative mt-4 font-display text-2xl sm:text-3xl">Raah e Hidayath — The Path of Guidance</h2>
         <p className="relative mt-2 max-w-lg text-sm text-primary-foreground/80">
           The complete Quran with recitation, translation, tafseer and explanation, every major hadith collection,
           prayer times and daily worship — in your language.

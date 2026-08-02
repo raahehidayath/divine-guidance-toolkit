@@ -7,9 +7,9 @@ import { TASBEEH_PRESETS } from "@/lib/islamic-data";
 export const Route = createFileRoute("/tasbeeh")({
   head: () => ({
     meta: [
-      { title: "Digital Tasbeeh Counter | Rah e Hidayath" },
+      { title: "Digital Tasbeeh Counter | Raah e Hidayath" },
       { name: "description", content: "Count SubhanAllah, Alhamdulillah, Allahu Akbar, Durood and Istighfar with a beautiful digital tasbeeh." },
-      { property: "og:title", content: "Digital Tasbeeh | Rah e Hidayath" },
+      { property: "og:title", content: "Digital Tasbeeh | Raah e Hidayath" },
       { property: "og:description", content: "Keep your daily dhikr on track." },
     ],
   }),

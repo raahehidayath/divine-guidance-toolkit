@@ -6,9 +6,9 @@ import { DUAS } from "@/lib/islamic-data";
 export const Route = createFileRoute("/duas")({
   head: () => ({
     meta: [
-      { title: "Duas & Daily Azkar | Rah e Hidayath" },
+      { title: "Duas & Daily Azkar | Raah e Hidayath" },
       { name: "description", content: "Authentic daily duas with Arabic, transliteration, English and Urdu meanings for every occasion." },
-      { property: "og:title", content: "Duas & Azkar | Rah e Hidayath" },
+      { property: "og:title", content: "Duas & Azkar | Raah e Hidayath" },
       { property: "og:description", content: "Masnoon duas for morning, evening, travel, food, sleep and more." },
     ],
   }),
