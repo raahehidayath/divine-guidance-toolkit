@@ -19,7 +19,7 @@ export const Route = createFileRoute("/scanner")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: Scanner;
+  component: Scanner,
 });
 
 const HISTORY_KEY = "reh-scan-history";
