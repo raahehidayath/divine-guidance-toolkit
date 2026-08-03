@@ -55,8 +55,24 @@ export const Route = createFileRoute("/api/ai")({
     handlers: {
       POST: async ({ request }) => {
         const body = (await request.json()) as Body;
-        const key = process.env["LOVABLE_API_KEY"];
-        if (!key) return new Response("The AI assistant is not configured yet.", { status: 500 });
+
+        // Provider selection:
+        // 1. GEMINI_API_KEY  -> your own Google AI Studio key (self-hosting, e.g. Hostinger VPS)
+        // 2. LOVABLE_API_KEY -> Lovable AI Gateway (default while hosted on Lovable)
+        const geminiKey = process.env["GEMINI_API_KEY"];
+        const lovableKey = process.env["LOVABLE_API_KEY"];
+        if (!geminiKey && !lovableKey) {
+          return new Response(
+            "The AI assistant is not configured yet. Add a GEMINI_API_KEY environment variable.",
+            { status: 500 },
+          );
+        }
+
+        const endpoint = geminiKey
+          ? "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+          : "https://ai.gateway.lovable.dev/v1/chat/completions";
+        const apiKey = geminiKey ?? lovableKey!;
+        const model = geminiKey ? (process.env["GEMINI_MODEL"] ?? "gemini-2.5-flash") : MODEL;
 
         const language = LANG_NAMES[body.language ?? "en"] ?? "English";
         const messages = [
@@ -66,13 +82,12 @@ export const Route = createFileRoute("/api/ai")({
           { role: "system" as const, content: `Reminder: reply entirely in ${language}.` },
         ];
 
-
         let upstream: Response;
         try {
-          upstream = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+          upstream = await fetch(endpoint, {
             method: "POST",
-            headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-            body: JSON.stringify({ model: MODEL, messages, stream: true, max_tokens: 4096 }),
+            headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+            body: JSON.stringify({ model, messages, stream: true, max_tokens: 4096 }),
           });
         } catch {
           return new Response("Could not reach the assistant. Please check your connection.", { status: 502 });
