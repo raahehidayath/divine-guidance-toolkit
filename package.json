@@ -10,8 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "build:static": "NITRO_PRESET=static vite build",
-    "build:node": "NITRO_PRESET=node-server vite build"
+    "build:static": "NITRO_PRESET=node_server vite build",
+    "build:node": "NITRO_PRESET=node_server vite build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

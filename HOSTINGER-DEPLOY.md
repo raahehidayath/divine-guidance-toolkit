@@ -1,5 +1,32 @@
 # Putting Raah e Hidayath on your Hostinger domain
 
+## Important: if the domain uses GitHub Pages
+
+This repository now includes `.github/workflows/deploy-pages.yml`. It builds
+and publishes the actual application automatically whenever `main` is updated,
+instead of letting GitHub Pages render `README.md`.
+
+In GitHub open **Settings → Pages** and set **Source** to **GitHub Actions**.
+Then open the **Actions** tab and wait for **Build and deploy Raah e Hidayath**
+to finish. Set the custom domain to `raahehidayath.online` and enable HTTPS.
+Do not select **Deploy from a branch**; that mode is what displays repository
+files instead of the built application.
+
+For DNS managed by Hostinger, use GitHub Pages' four apex records:
+
+| Type | Name | Value |
+|------|------|-------|
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | `<your-github-username>.github.io` |
+
+Remove any other `A`, `AAAA`, or forwarding record for `@` or `www` that
+conflicts with these records. DNS changes can take time to propagate.
+
+---
+
 Your domain currently shows the README ("Code Edit Helper"). That happens when
 the **repository files** are uploaded instead of the **built site**. Hostinger
 serves whatever is in `public_html/`, and with no `index.html` there it falls
@@ -24,19 +51,21 @@ cd <repo>
 npm install
 
 # macOS / Linux
-NITRO_PRESET=static npm run build
+npm run build:static
 
 # Windows PowerShell
-$env:NITRO_PRESET="static"; npm run build
+npm run build:static
 ```
 
-The finished site is in **`dist/client/`**.
+The build produces **`.output/public/`** plus the renderer in
+**`.output/server/`**. For GitHub Pages, the included workflow automatically
+renders `index.html`; no manual build/upload is needed.
 
 ### 2. Upload
 
 1. Hostinger hPanel → **Files → File Manager** → open `public_html`.
 2. **Delete everything already in there** (this is what is showing the README).
-3. Upload **the contents of `dist/client/`** — not the folder itself, its
+3. Upload **the contents of `.output/public/`** — not the folder itself, its
    contents — so `public_html/index.html` exists.
 4. Make sure the hidden **`.htaccess`** file came along (File Manager →
    Settings → *Show hidden files*). It is included in the build and handles
@@ -142,7 +171,7 @@ same account — you only need to fix `public_html`.)
 ## Quick checklist if it still shows the README
 
 - [ ] `public_html/index.html` exists (not `README.md`)
-- [ ] You uploaded the **contents** of `dist/client/`, not the folder
+- [ ] You uploaded the **contents** of `.output/public/`, not the folder
 - [ ] Hidden `.htaccess` is present in `public_html`
 - [ ] Browser cache cleared / opened in a private window
 - [ ] SSL installed and the site opens on `https://`
