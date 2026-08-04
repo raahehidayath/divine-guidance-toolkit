@@ -1,5 +1,32 @@
 # Putting Raah e Hidayath on your Hostinger domain
 
+## Important: if the domain uses GitHub Pages
+
+This repository now includes `.github/workflows/deploy-pages.yml`. It builds
+and publishes the actual application automatically whenever `main` is updated,
+instead of letting GitHub Pages render `README.md`.
+
+In GitHub open **Settings → Pages** and set **Source** to **GitHub Actions**.
+Then open the **Actions** tab and wait for **Build and deploy Raah e Hidayath**
+to finish. Set the custom domain to `raahehidayath.online` and enable HTTPS.
+Do not select **Deploy from a branch**; that mode is what displays repository
+files instead of the built application.
+
+For DNS managed by Hostinger, use GitHub Pages' four apex records:
+
+| Type | Name | Value |
+|------|------|-------|
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | `<your-github-username>.github.io` |
+
+Remove any other `A`, `AAAA`, or forwarding record for `@` or `www` that
+conflicts with these records. DNS changes can take time to propagate.
+
+---
+
 Your domain currently shows the README ("Code Edit Helper"). That happens when
 the **repository files** are uploaded instead of the **built site**. Hostinger
 serves whatever is in `public_html/`, and with no `index.html` there it falls
