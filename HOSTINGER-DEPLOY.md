@@ -57,13 +57,13 @@ NITRO_PRESET=static npm run build
 $env:NITRO_PRESET="static"; npm run build
 ```
 
-The finished site is in **`dist/client/`**.
+The finished site is in **`.output/public/`** when built outside Lovable.
 
 ### 2. Upload
 
 1. Hostinger hPanel → **Files → File Manager** → open `public_html`.
 2. **Delete everything already in there** (this is what is showing the README).
-3. Upload **the contents of `dist/client/`** — not the folder itself, its
+3. Upload **the contents of `.output/public/`** — not the folder itself, its
    contents — so `public_html/index.html` exists.
 4. Make sure the hidden **`.htaccess`** file came along (File Manager →
    Settings → *Show hidden files*). It is included in the build and handles
@@ -169,7 +169,7 @@ same account — you only need to fix `public_html`.)
 ## Quick checklist if it still shows the README
 
 - [ ] `public_html/index.html` exists (not `README.md`)
-- [ ] You uploaded the **contents** of `dist/client/`, not the folder
+- [ ] You uploaded the **contents** of `.output/public/`, not the folder
 - [ ] Hidden `.htaccess` is present in `public_html`
 - [ ] Browser cache cleared / opened in a private window
 - [ ] SSL installed and the site opens on `https://`

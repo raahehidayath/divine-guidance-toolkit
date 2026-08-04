@@ -21,28 +21,30 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
-          cache: npm
+          bun-version: latest
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Build static application
-        run: npm run build:static
+        run: bun run build
+        env:
+          NITRO_PRESET: github_pages
 
       - name: Configure custom domain and route fallback
         run: |
-          cp dist/client/index.html dist/client/404.html
-          printf '%s\n' 'raahehidayath.online' > dist/client/CNAME
-          touch dist/client/.nojekyll
+          test -s .output/public/index.html
+          cp .output/public/index.html .output/public/404.html
+          printf '%s\n' 'raahehidayath.online' > .output/public/CNAME
+          touch .output/public/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/client
+          path: .output/public
 
   deploy:
     environment:
