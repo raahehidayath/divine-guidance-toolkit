@@ -32,10 +32,19 @@ jobs:
       - name: Build static application
         run: bun run build
         env:
-          NITRO_PRESET: github_pages
+          NITRO_PRESET: node_server
 
-      - name: Configure custom domain and route fallback
+      - name: Render application for static hosting
         run: |
+          PORT=4173 node .output/server/index.mjs &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --show-error http://127.0.0.1:4173/ -o .output/public/index.html; then
+              break
+            fi
+            sleep 1
+          done
           test -s .output/public/index.html
           cp .output/public/index.html .output/public/404.html
           printf '%s\n' 'raahehidayath.online' > .output/public/CNAME

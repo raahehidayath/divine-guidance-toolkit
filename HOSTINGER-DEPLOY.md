@@ -51,13 +51,15 @@ cd <repo>
 npm install
 
 # macOS / Linux
-NITRO_PRESET=static npm run build
+npm run build:static
 
 # Windows PowerShell
-$env:NITRO_PRESET="static"; npm run build
+npm run build:static
 ```
 
-The finished site is in **`.output/public/`** when built outside Lovable.
+The build produces **`.output/public/`** plus the renderer in
+**`.output/server/`**. For GitHub Pages, the included workflow automatically
+renders `index.html`; no manual build/upload is needed.
 
 ### 2. Upload
 
